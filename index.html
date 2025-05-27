@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+       
+    <meta charset="UTF-8">
+       
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ловец монстров</title>
+        <style>
+        body {
+            text-align: center;
+        }
+
+        #gameArea {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            border: 1px solid #000;
+            overflow: hidden;
+        }
+
+        .monster {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+        <h1>Ловец монстров!</h1>
+        <div id="gameArea"></div>
+        <div>Очки: <span id="score">0</span></div>
+       
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+       
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+       
+    <script>
+        let score = 0;
+        function createMonster() {
+            const monster = $('<div class="monster"></div>').appendTo('#gameArea');
+            const x = Math.random() * ($('#gameArea').width() - 50);
+            const y = Math.random() * ($('#gameArea').height() - 50);
+            monster.css({ left: x, top: y });
+            gsap.to(monster, {
+                duration: 1, scale: 1.5, onComplete: () => {
+                    monster.remove();
+                }
+            });
+            monster.click(() => {
+                score++;
+                $('#score').text(score);
+                monster.remove();
+            });
+        }
+        setInterval(createMonster, 1000);
+    </script>
+</body>
+
+</html>
